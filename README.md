@@ -1,6 +1,6 @@
-# go-web-srv
+# docker-stack-alpha
 
-    cd go-web-srv
+    cd docker=stack=alpha
     mkdir mysql-data portainer-data grafana-data
     cd web-files
     ./build-app.sh
