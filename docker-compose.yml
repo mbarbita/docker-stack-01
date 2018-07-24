@@ -1,0 +1,90 @@
+version: '3.7'
+services:
+  web:
+    image: ubuntu
+    ports:
+     - "80:80"
+    volumes:
+     - ./web-files:/go-app
+    working_dir: /go-app
+    command: /go-app/go-app
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+    networks:
+     - srv
+
+  portainer:
+    image: portainer/portainer
+    ports:
+      - "9000:9000"
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer-data:/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+    networks:
+     - srv
+
+  grafana:
+    image: grafana/grafana
+    ports:
+     - "3000:3000"
+    volumes:
+     - ./grafana-data:/var/lib/grafana
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource,raintank-worldping-app
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+    user: "root"
+    networks:
+     - srv
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+    - 3306:3306
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+    volumes:
+       - ./mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+#      MYSQL_ROOT_PASSWORD: password
+    secrets:
+      - db_root_password
+    networks:
+      - srv
+
+  adminer:
+    image: adminer
+    deploy:
+      replicas: 1
+    ports:
+      - 8080:8080
+    networks:
+      - srv
+
+networks:
+  srv:
+
+secrets:
+  db_root_password:
+    file: db_root_password.txt
