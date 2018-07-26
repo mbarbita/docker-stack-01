@@ -11,7 +11,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: on-failure
+        condition: any
       placement:
         constraints: [node.role == manager]
     networks:
@@ -28,7 +28,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: on-failure
+        condition: any
       placement:
         constraints: [node.role == manager]
     networks:
@@ -45,12 +45,14 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: on-failure
+        condition: any
       placement:
         constraints: [node.role == manager]
     user: "root"
     networks:
      - srv
+    depends_on:
+     - db
 
   db:
     image: mysql
@@ -60,7 +62,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: on-failure
+        condition: any
       placement:
         constraints: [node.role == manager]
     volumes:
@@ -77,10 +79,14 @@ services:
     image: adminer
     deploy:
       replicas: 1
+      restart_policy:
+        condition: any
     ports:
       - 8080:8080
     networks:
       - srv
+    depends_on:
+      - db
 
 networks:
   srv:
