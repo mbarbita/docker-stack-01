@@ -1,7 +1,6 @@
 # docker-stack-alpha
 
-    cd docker=stack=alpha
-    mkdir mysql-data portainer-data grafana-data
+    cd docker-stack-alpha
     cd web-files
     ./build-app.sh
     cd ..

@@ -24,7 +24,7 @@ services:
     command: -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./portainer-data:/data
+      - portainer-data:/data
     deploy:
       replicas: 1
       restart_policy:
@@ -39,7 +39,7 @@ services:
     ports:
      - "3000:3000"
     volumes:
-     - ./grafana-data:/var/lib/grafana
+     - grafana-data:/var/lib/grafana
     environment:
       GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource,raintank-worldping-app'
 # SMTP Conf      
@@ -74,7 +74,7 @@ services:
       placement:
         constraints: [node.role == manager]
     volumes:
-       - ./mysql-data:/var/lib/mysql
+       - mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
 #      MYSQL_ROOT_PASSWORD: password
@@ -95,6 +95,11 @@ services:
       - srv
     depends_on:
       - db
+
+volumes:
+  mysql-data:
+  grafana-data:
+  portainer-data:
 
 networks:
   srv:
