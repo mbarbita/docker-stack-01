@@ -17,6 +17,7 @@ func main() {
 	address := flag.String("address", "", "IP address")
 	database := flag.String("database", "grafana", "Database")
 	table := flag.String("table", "", "Table")
+	metric := flag.String("metric", "generic", "Metric")
 	flag.Parse()
 
 	var val1 int
@@ -30,7 +31,7 @@ func main() {
 	if err != nil {
 		panic(err.Error()) // proper error handling instead of panic in your app
 	}
-	stm := "INSERT INTO " + *table + "(time, val1) VALUES(NOW(),?)"
+	stm := "INSERT INTO " + *table + "(time, val1, metric1) VALUES(NOW(),?,?)"
 	insForm, err := db.Prepare(stm)
 	if err != nil {
 		panic(err.Error())
@@ -39,8 +40,8 @@ func main() {
 	rand.Seed(42) // Try changing this number!
 	for {
 		val1 = rand.Intn(100)
-		insForm.Exec(val1)
-		log.Println("INSERT: time: ", time.Now(), " | val1: ", val1)
+		insForm.Exec(val1, metric)
+		log.Println("INSERT: time: ", time.Now(), " | val1: ", val1, " | metric: ", metric)
 		time.Sleep(10 * 1000 * time.Millisecond)
 	}
 }
