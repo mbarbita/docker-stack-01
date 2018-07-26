@@ -40,8 +40,8 @@ func main() {
 	rand.Seed(42) // Try changing this number!
 	for {
 		val1 = rand.Intn(100)
-		insForm.Exec(val1, metric)
-		log.Println("INSERT: time: ", time.Now(), " | val1: ", val1, " | metric: ", metric)
+		insForm.Exec(val1, *metric)
+		log.Println("INSERT: time: ", time.Now(), " | val1: ", val1, " | metric: ", *metric)
 		time.Sleep(10 * 1000 * time.Millisecond)
 	}
 }
