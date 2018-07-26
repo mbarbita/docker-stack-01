@@ -18,3 +18,7 @@ edit **db_root_password.txt** and replace **"password"** with a new one
 
     CREATE USER 'grafanarw' IDENTIFIED BY 'password';
     GRANT ALL ON grafana.* TO 'grafanarw';
+    
+### misc
+    ALTER USER user IDENTIFIED BY 'auth_string';
+    ALTER TABLE table_name AUTO_INCREMENT = 1;
