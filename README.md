@@ -18,6 +18,16 @@ edit **db_root_password.txt** and replace **"password"** with a new one
     CREATE USER 'grafanarw' IDENTIFIED BY 'password';
     GRANT ALL ON grafana.* TO 'grafanarw';
     
+    CREATE TABLE `grafana`.`alpha1` (
+    `idalpha1_id` INT NOT NULL AUTO_INCREMENT,
+    `time` DATETIME NULL,
+    `val1` DECIMAL NULL,
+    `metric1` VARCHAR(45) NULL DEFAULT 'Hz',
+    `val2` DECIMAL NULL,
+    `metric2` VARCHAR(45) NULL DEFAULT 'MW',
+    PRIMARY KEY (`idalpha1_id`),
+    UNIQUE INDEX `time_UNIQUE` (`time` ASC));
+       
     CREATE TABLE `grafana`.`alpha2` (
     `idalpha2_id` INT NOT NULL AUTO_INCREMENT,
     `time` DATETIME NULL,
