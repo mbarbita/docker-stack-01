@@ -20,10 +20,10 @@ edit **db_root_password.txt** and replace **"password"** with a new one
     
     CREATE TABLE `grafana`.`alpha1` (
     `idalpha1_id` INT NOT NULL AUTO_INCREMENT,
-    `time` DATETIME NULL,
-    `val1` DECIMAL NULL,
+    `time` DATETIME(2) NULL,
+    `val1` DECIMAL(10,4) NULL,
     `metric1` VARCHAR(45) NULL DEFAULT 'Hz',
-    `val2` DECIMAL NULL,
+    `val2` DECIMAL(10,3) NULL,
     `metric2` VARCHAR(45) NULL DEFAULT 'MW',
     PRIMARY KEY (`idalpha1_id`),
     UNIQUE INDEX `time_UNIQUE` (`time` ASC));
