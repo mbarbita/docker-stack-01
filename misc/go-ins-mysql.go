@@ -8,10 +8,24 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
+
+func printLineNr(st string) {
+	fmt.Println("Line:", st)
+	fmt.Println("Line Len:", len(st))
+	for j := 0; j < len(st); j++ {
+		fmt.Printf("%2v|", st[j:j+1])
+	}
+	fmt.Print("\n")
+	for j := 0; j < len(st); j++ {
+		fmt.Printf("%2v|", j)
+	}
+	fmt.Print("\n\n")
+}
 
 func main() {
 
@@ -54,13 +68,16 @@ func main() {
 	// loc, _ := time.LoadLocation("Europe/Bucharest")
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
+		if i < 3 {
+			printLineNr(scanner.Text())
+		}
 		//02/01/2018 20:14:59.55,  50.0148,   90.933 11998
 
 		// 2014-09-08 17:51:04.777
 		datetime := scanner.Text()[0:22]
 		// datetime := "02/01/2018 20:14:59.55"
-		freq := scanner.Text()[25:32]
-		power := scanner.Text()[36:42]
+		freq := scanner.Text()[24:32]
+		power := scanner.Text()[35:42]
 		// dmm := scanner.Text()[0:2]
 		// ddd := scanner.Text()[3:5]
 		// dyyyy := scanner.Text()[6:10]
@@ -85,19 +102,32 @@ func main() {
 		// fmt.Println("nano:", t.Nanosecond())
 
 		// fmt.Println("freq:", freq)
+		freq = strings.TrimSpace(freq)
 		fr, _ := strconv.ParseFloat(freq, 4)
+		if err != nil {
+			panic(err.Error()) // proper error handling instead of panic in your app
+		}
 		// if err == nil {
 		// 	fmt.Printf("%T, %v\n", fr, fr)
 		// }
 		// fmt.Println("power:", power)
+		power = strings.TrimSpace(power)
 		pw, _ := strconv.ParseFloat(power, 3)
+		if err != nil {
+			panic(err.Error()) // proper error handling instead of panic in your app
+		}
 		// if err == nil {
 		// 	fmt.Printf("%T, %v\n", pw, pw)
 		// }
 		// stm := "INSERT INTO " + *table + "(time, val1, metric1,val2,metric2) VALUES(?,?,?,?,?)"
 		insForm.Exec(t.Format(format), fr, "Hz", pw, "MW")
 		fmt.Println("inserted:", i, t.Format(format), fr, "Hz", pw, "MW")
+
 		i++
+		// insert i == n (+1) lines. i == 0 for all
+		if i == 0 {
+			return
+		}
 		// return
 	}
 
