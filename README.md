@@ -48,7 +48,9 @@ edit **db_root_password.txt** and replace **"password"** with a new one
 Very specific, work releated go apps to populate mysql tables with data
 
 ### submodules
-    git submodule add <module repo>
+    git submodule add <submodule repo>
+    commit, push
     git clone --recurse-submodules <main repo>
-    git submodule update --remote <module>
-    
+    git submodule update --remote <submodule>
+    commit, push
+submodule update will pull last changes from submodule repo. Without update the submodule will stay at the commit when the submodule was added.
