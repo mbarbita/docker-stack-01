@@ -5,7 +5,7 @@ services:
     ports:
      - "80:80"
     volumes:
-     - ./web-files:/go-app
+     - ./go-web-server:/go-app
     working_dir: /go-app
     command: /go-app/go-app
     deploy:
@@ -42,7 +42,7 @@ services:
      - grafana-data:/var/lib/grafana
     environment:
       GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource,raintank-worldping-app'
-# SMTP Conf      
+# SMTP Conf
 #      GF_SMTP_ENABLED: 'true'
 #      GF_SMTP_HOST: 'host:port'
 #      GF_SMTP_USER: 'user'
