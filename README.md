@@ -46,3 +46,9 @@ edit **db_root_password.txt** and replace **"password"** with a new one
 
 ### misc folder
 Very specific, work releated go apps to populate mysql tables with data
+
+### submodules
+    git submodule add <module repo>
+    git clone --recurse-submodules <main repo>
+    git submodule update --remote <module>
+    
