@@ -1,0 +1,3 @@
+[submodule "go-web-server"]
+	path = go-web-server
+	url = https://github.com/mbarbita/go-web-server
