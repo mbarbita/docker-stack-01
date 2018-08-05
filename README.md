@@ -49,14 +49,22 @@ Very specific, work releated go apps to populate mysql tables with data
 
 ### submodules
 new module:
+
     git submodule add <submodule repo>
     commit, push
+
 clone:
+
     git clone --recurse-submodules <main repo>
+    
 or
+
     git clone <main repo>
     git submodule update --init
-update submodule:    
+    
+update submodule:
+
     git submodule update --remote <submodule>
     commit, push
+    
 submodule update will pull last changes from submodule repo. Without update the submodule will stay at the commit when the submodule was added.
