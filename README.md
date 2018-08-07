@@ -4,7 +4,7 @@ Docker stack with a very simple Go web server, MySQL, Adminer, Grafana and Porta
 
 ## Setup
     cd docker-stack-alpha
-    cd web-files
+    cd go-web-server
     ./build-app.sh
     cd ..
 
@@ -56,15 +56,15 @@ new module:
 clone:
 
     git clone --recurse-submodules <main repo>
-    
+
 or
 
     git clone <main repo>
     git submodule update --init
-    
+
 update submodule:
 
     git submodule update --remote <submodule>
     commit, push
-    
+
 submodule update will pull last changes from submodule repo. Without update the submodule will stay at the commit when the submodule was added.
